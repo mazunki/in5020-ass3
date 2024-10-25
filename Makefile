@@ -13,11 +13,11 @@ BIT_LENGTH ?= 10
 all: $(JAR_TARGET)
 
 $(JAR_TARGET): $(CLASS_FILES)
-	mkdir -p target
+	@mkdir -p target
 	$(JAR) -cfm $(JAR_TARGET) $(MANIFEST) -C $(TARGET) .
 
 %.class: %.java
-	mkdir -p $(TARGET)
+	@mkdir -p $(TARGET)
 	$(JAVAC) -d $(TARGET) -sourcepath src $<
 
 clean:
