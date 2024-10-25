@@ -1,5 +1,7 @@
 JAVAC = javac
 JAR = jar
+JAVA_FLAGS = -Xlint:unchecked
+
 JAVA_FILES = $(shell find src/main/java -name "*.java")
 CLASS_FILES = $(JAVA_FILES:.java=.class)
 TARGET = target/classes
@@ -19,7 +21,7 @@ $(JAR_TARGET): $(CLASS_FILES)
 
 %.class: %.java
 	@mkdir -p $(TARGET)
-	$(JAVAC) -d $(TARGET) -sourcepath src/main/java $<
+	$(JAVAC) $(JAVA_FLAGS) -d $(TARGET) -sourcepath src/main/java $<
 
 clean:
 	rm -rf $(TARGET) $(JAR_TARGET) $(LOG_DIR)
@@ -29,9 +31,18 @@ run:
 
 rerun: clean all run
 
+case1:
+	make run NODE_COUNT=10 BIT_LENGTH=10
+
+case2:
+	make run NODE_COUNT=100 BIT_LENGTH=20
+
+case3:
+	make run NODE_COUNT=1000 BIT_LENGTH=20
+
 sim: $(JAR_TARGET)
 	mkdir -p $(LOG_DIR)
-	make run NODE_COUNT=10 BIT_LENGTH=10 | tee $(LOG_DIR)/sim-10_10.log
-	make run NODE_COUNT=100 BIT_LENGTH=20 | tee $(LOG_DIR)/sim-100_20.log
-	make run NODE_COUNT=1000 BIT_LENGTH=20 | tee $(LOG_DIR)/sim-1000_20.log
+	make run case1 | tee $(LOG_DIR)/sim-100_20.log
+	make run case2 | tee $(LOG_DIR)/sim-100_20.log
+	make run case3 | tee $(LOG_DIR)/sim-1000_20.log
 
