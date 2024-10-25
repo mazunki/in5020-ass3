@@ -3,7 +3,8 @@ JAR = jar
 JAVA_FILES = $(shell find src/main/java -name "*.java")
 CLASS_FILES = $(JAVA_FILES:.java=.class)
 TARGET = target/classes
-JAR_TARGET = target/chordprotocol.jar
+BINDIR = bin
+JAR_TARGET = $(BINDIR)/chordprotocol.jar
 MANIFEST = src/resources/manifest.txt
 LOG_DIR = logs
 
@@ -24,7 +25,7 @@ clean:
 	rm -rf $(TARGET) $(JAR_TARGET) $(LOG_DIR)
 
 run:
-	java -cp $(JAR_TARGET) com.ass3.protocol.Simulator $(NODE_COUNT) $(BIT_LENGTH)
+	java -cp $(JAR_TARGET) com.ass3.Simulator $(NODE_COUNT) $(BIT_LENGTH)
 
 rerun: clean all run
 
