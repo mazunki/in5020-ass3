@@ -16,4 +16,4 @@ You can also just `make cleansim` to build the log files for the required cases.
 
 We prefixed all the packages with  `com.ass3` beacuse an empty groupId is invalid. This required us to make subdirs of `src/`. 
 
-The precode comes with some warning regarding unchecks casts which we fixed by modifying the precode. 
+The precode comes with some warning regarding unchecks casts which we fixed by modifying the precode's `ChordProtocolSimulator.checkResponse` function.
