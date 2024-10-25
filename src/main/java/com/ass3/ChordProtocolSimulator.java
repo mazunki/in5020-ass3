@@ -1,14 +1,19 @@
 package com.ass3;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+
+import com.ass3.crypto.ConsistentHashing;
 import com.ass3.p2p.Network;
 import com.ass3.p2p.NetworkInterface;
 import com.ass3.p2p.NodeInterface;
-import com.ass3.crypto.ConsistentHashing;
 import com.ass3.protocol.ChordProtocol;
 import com.ass3.protocol.LookUpResponse;
 import com.ass3.protocol.Protocol;
-
-import java.util.*;
 
 /**
  * This class simulates the chord protocol.
@@ -101,7 +106,6 @@ public class ChordProtocolSimulator {
 	}
 
 
-
 	/**
 	 * This method generates 'KeyCount' number of keys. each key has name "key"+i i=1...KeyCount
 	 *     For each key:
@@ -120,7 +124,6 @@ public class ChordProtocolSimulator {
 	}
 
 
-
 	/**
 	 * This method finds peer that should be responsible for a given key.
 	 * It retrieves the set of nodes from the network and for each node calculates the index of the node using
@@ -132,7 +135,7 @@ public class ChordProtocolSimulator {
 	 */
 	public String findPeer(int key_index){
 
-		List<Integer> sortedIndexes = new ArrayList<Integer>();
+		List<Integer> sortedIndexes = new ArrayList<>();
 		int peerIndex = -1;
 
 		// calculate the indexes of all the nodes using consistent hasing
@@ -193,8 +196,7 @@ public class ChordProtocolSimulator {
 		}
 		return null;
 	}
-
-
+	
 
 	/**
 	 *  This method prints the network. The network consists of set of nodes. It prints different information contained
@@ -203,10 +205,10 @@ public class ChordProtocolSimulator {
 	public void printNetwork(){
 
 		// gets the network from the protocol
-		NetworkInterface network = protocol.getNetwork();
+		NetworkInterface net = protocol.getNetwork();
 
 		// prints the top0logy
-		network.printTopology();
+		net.printTopology();
 	}
 
 
@@ -224,7 +226,7 @@ public class ChordProtocolSimulator {
 		}
 		System.out.println("........printing ring..............");
 
-		if(head.getNeighbors().size()==0){
+		if(head == null || head.getNeighbors().isEmpty()){
 			return;
 		}
 
@@ -285,13 +287,10 @@ public class ChordProtocolSimulator {
 	 */
 	public boolean checkResponse(int keyIndex, String peerName){
 		Object data = this.network.getNode(peerName).getData();
-
-		if (data instanceof LinkedHashSet<?>) {
-			LinkedHashSet<?> dataItems = (LinkedHashSet<?>) data;
-
+		if (data instanceof LinkedHashSet<?> dataItems) {
 			for (Object item : dataItems) {
-				if (item instanceof Integer) {
-					if ((Integer) item == keyIndex) {
+				if (item instanceof Integer integer) {
+					if (integer == keyIndex) {
 						return true;
 					}
 				}
@@ -336,7 +335,7 @@ public class ChordProtocolSimulator {
 		//testLookUp();
 
 		/*
-		implement this logic
+		TODO: implement this logic
 		 */
 		// Look up all the key, print out as required in the Assignment Description
 	}

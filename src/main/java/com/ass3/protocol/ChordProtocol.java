@@ -1,11 +1,14 @@
 package com.ass3.protocol;
 
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 import com.ass3.crypto.ConsistentHashing;
 import com.ass3.p2p.NetworkInterface;
-
-
-import java.util.*;
+import com.ass3.p2p.NodeInterface;
 
 /**
  * This class implements the chord protocol. The protocol is tested using the custom built simulator.
@@ -24,14 +27,11 @@ public class ChordProtocol implements Protocol{
 	// key indexes. tuples of (<key name>, <key index>)
 	public HashMap<String, Integer> keyIndexes;
 
-
 	public ChordProtocol(int m){
 		this.m = m;
 		setHashFunction();
-		this.keyIndexes = new HashMap<String, Integer>();
+		this.keyIndexes = new HashMap<>();
 	}
-
-
 
 	/**
 	 * sets the hash function
@@ -40,38 +40,32 @@ public class ChordProtocol implements Protocol{
 		this.ch = new ConsistentHashing(this.m);
 	}
 
-
-
 	/**
 	 * sets the network
 	 * @param network the network object
 	 */
+        @Override
 	public void setNetwork(NetworkInterface network){
 		this.network = network;
 	}
 
-
 	/**
-	 * sets the key indexes. Those key indexes can be used to  test the lookup operation.
+	 * sets the key indexes. Those key indexes can be used to test the lookup operation.
 	 * @param keyIndexes - indexes of keys
 	 */
+    @Override
 	public void setKeys(HashMap<String, Integer> keyIndexes){
 		this.keyIndexes = keyIndexes;
 	}
-
-
 
 	/**
 	 *
 	 * @return the network object
 	 */
+    @Override
 	public NetworkInterface getNetwork(){
 		return this.network;
 	}
-
-
-
-
 
 
 	/**
@@ -124,6 +118,7 @@ public class ChordProtocol implements Protocol{
 	 * @param keyIndex index of the key
 	 * @return names of nodes that have been searched and the final node that contains the key
 	 */
+    @Override
 	public LookUpResponse lookUp(int keyIndex){
 		/*
 		implement this logic

@@ -3,9 +3,6 @@ package com.ass3.p2p;
 import java.util.LinkedHashMap;
 
 public interface NetworkInterface {
-
-
-
 	/**
 	 *  returns the network object that consists of all the nodes
 	 *

@@ -25,7 +25,7 @@ public class Simulator{
 	 *
 	 * @param name network name that is used for identifying the network
 	 * @param nodeCount number of nodes in the network
-	 * @return network object that contains the network that used in the protocol
+	 * @return network object that contains the network that's used in the protocol
 	 */
 	public Network createNetwork(String name, int nodeCount){
 		Network network = Network.createNetwork(name, nodeCount);
@@ -33,10 +33,6 @@ public class Simulator{
 	}
 
 	/*
-
-
-
-
 	Once the two objects are created the protocol simulator will be started.
 	 */
 
@@ -62,12 +58,9 @@ public class Simulator{
 		// length of the indexes generated using consistent hashing
 		int m = Integer.parseInt(args[1]);
 
-
 		//        System.out.println("node count : "+nodeCount+"\t m : "+m);
 		Network myNetwork = createNetwork("test network", nodeCount);
 		//       System.out.println("network size: "+myNetwork.getSize());
-
-
 
 		// assigns random number of keys to test
 		int keyCount=0;
