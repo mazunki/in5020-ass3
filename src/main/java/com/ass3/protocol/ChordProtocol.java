@@ -3,6 +3,7 @@ package com.ass3.protocol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -130,13 +131,19 @@ public class ChordProtocol implements Protocol{
 		// Convert topology values to a list for easy access by index
 		List<NodeInterface> nodes = new ArrayList<>(this.network.getTopology().values());
 
+		int poolSize = (int) Math.pow(2, m);
+
 		for (NodeInterface node : nodes) {
 			List<FingerEntry> fingerTable = new ArrayList<>();
 			Integer nodeIndex = node.getId();
 
 			for (int i = 1; i <= m; i++) {
-				int start = (nodeIndex + (int) Math.pow(2, i - 1)) % (int) Math.pow(2, m);
-				int end = (nodeIndex + (int) Math.pow(2, i)) % (int) Math.pow(2, m);
+				int start = (nodeIndex + (int) Math.pow(2, i - 1)) % poolSize;
+				int end = (nodeIndex + (int) Math.pow(2, i) - 1) % poolSize;
+
+				if (i == m) {
+					end = fingerTable.getFirst().start - 1;
+				}
 
 				NodeInterface successor = null;
 				for (NodeInterface n : nodes) {
@@ -167,54 +174,66 @@ public class ChordProtocol implements Protocol{
 	 * @param keyIndex index of the key
 	 * @return names of nodes that have been searched and the final node that contains the key
 	 */
-   @Override
+	@Override
 	public LookUpResponse lookUp(int keyIndex) {
+		System.err.println("Looking up key index: " + keyIndex);
 		LinkedHashSet<String> route = new LinkedHashSet<>();
 		int hopCount = 0;
 
-		NodeInterface curr = this.network.getTopology().firstEntry().getValue();
+		NodeInterface curr = this.network.getTopology().firstEntry().getValue(); // starting node
+
+		System.err.println("Starting from node: " + curr.getName());
 		route.add(curr.getName());
 
-		// let's pray we don't loop forever
-		while (true) {
-			int currId = curr.getId();
+		HashSet<String> visited = new HashSet<>();
+		while (!visited.contains(curr.getName())) {
+			visited.add(curr.getName());
 			NodeInterface successor = curr.getSuccessor();
-			int successorId = successor.getId();
 
-			// are we responsible for this index?
-			if ((currId <= keyIndex && keyIndex < successorId) ||
-				(currId > successorId && (keyIndex >= currId || keyIndex < successorId))) {
-				break; // yay, we are
+			if (FingerEntry.contains(keyIndex, curr.getId(), successor.getId())) {
+					System.err.println("Found the responsible node: " + successor.getName());
+					curr = successor;
+					break; // we own it!
 			}
 
 			hopCount++;
 
-			List<FingerEntry> fingerTable = (List<FingerEntry>) curr.getRoutingTable();
-			boolean moved = false;
+			List<FingerEntry> fingerTable = new ArrayList<>();
+			if (curr.getRoutingTable() instanceof List table) {
+				for (Object entry : table) {
+                    fingerTable.add((FingerEntry) entry);
+				}
+			} else {
+				throw new RuntimeException("Routing table is not a list of FingerEntry");
+			}
 
-			// let's find the next node to route to
+			boolean found = false;
 			for (int i = fingerTable.size() - 1; i >= 0; i--) {
 				FingerEntry candidate = fingerTable.get(i);
-
-				// this is the closest preceding finger
-				if (candidate.successor.getId() < keyIndex) {
+				if (candidate.contains(keyIndex)) {
 					curr = candidate.successor;
-					moved = true;
+					System.err.println("Found finger table for key index: " + keyIndex + " at node: " + curr.getName());
+					found = true;
 					break;
 				}
 			}
 
-			// guys we didn't find it :( let's ask my successor
-			if (!moved) {
+			if (!found) {
 				curr = successor;
+				System.err.println("Using successor node: " + curr.getName());
 			}
-
+			// if (curr == successor) {
+			// 	throw new RuntimeException("Failed to find the responsible node for key index: " + keyIndex);
+			// }
 			route.add(curr.getName());
+
+			System.err.println("Adding to route: " + curr.getName());
 		}
 
-		return new LookUpResponse(route, hopCount, curr.getName());
+		LookUpResponse response = new LookUpResponse(route, hopCount, curr.getName());
+		System.err.println("Route: " + route);
+		return response;
 	}
-
 
 	private static class FingerEntry {
 		int start;
@@ -235,6 +254,22 @@ public class ChordProtocol implements Protocol{
 					",successor=" + successor.getName() +
 					'}';
 		        }
+
+		public boolean contains(int keyIndex) {
+			return contains(keyIndex, this.start, this.end);
+		}
+
+		public static boolean contains(int keyIndex, int start, int end) {
+			if (start == end) {
+				return start == keyIndex;
+			} else if (start > end) {
+				return start <= keyIndex || keyIndex < end;
+			} else {
+				return start <= keyIndex && keyIndex < end;
+			}
+		}
+
+
 	}
 
 
