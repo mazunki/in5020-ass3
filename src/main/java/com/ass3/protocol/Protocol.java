@@ -1,7 +1,7 @@
-package protocol;
+package com.ass3.protocol;
 
 
-import p2p.NetworkInterface;
+import com.ass3.p2p.NetworkInterface;
 
 import java.util.HashMap;
 

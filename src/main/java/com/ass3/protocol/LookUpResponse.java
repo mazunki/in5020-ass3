@@ -1,4 +1,4 @@
-package protocol;
+package com.ass3.protocol;
 
 import java.util.LinkedHashSet;
 

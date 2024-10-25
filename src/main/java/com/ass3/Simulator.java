@@ -1,6 +1,8 @@
-import p2p.Network;
-import protocol.ChordProtocol;
-import protocol.Protocol;
+package com.ass3;
+
+import com.ass3.p2p.Network;
+import com.ass3.protocol.ChordProtocol;
+import com.ass3.protocol.Protocol;
 
 
 /**
