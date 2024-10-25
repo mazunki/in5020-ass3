@@ -196,7 +196,7 @@ public class ChordProtocolSimulator {
 		}
 		return null;
 	}
-	
+
 
 	/**
 	 *  This method prints the network. The network consists of set of nodes. It prints different information contained
@@ -323,21 +323,39 @@ public class ChordProtocolSimulator {
 	 *     2) generate keys and assign it to nodes
 	 *     3) tests the look up operation (only if necessary)
 	 */
-	public void start(){
-
-		// builds the protocol
+	public void start() {
+		// Build the protocol (sets up overlay network, assigns keys, builds finger tables)
 		buildProtocol();
 
+		// Print the ring and network details for verification (optional)
 		printRing();
 		printNetwork();
 
-		// tests the lookup operation
-		//testLookUp();
+		// Perform lookups and collect results
+		int totalHops = 0;
+		int lookupCount = 0;
 
-		/*
-		TODO: implement this logic
-		 */
-		// Look up all the key, print out as required in the Assignment Description
+		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
+			int keyIndex = entry.getValue();
+			System.err.println(entry.getKey() + " -> " + keyIndex);
+
+			// Perform lookup using the protocol
+			LookUpResponse response = protocol.lookUp(keyIndex);
+			System.err.println("Got response: " + response);
+
+			// Print the lookup response directly using LookUpResponse.toString()
+			System.out.println(response);
+
+			// Accumulate hop count for average calculation
+			totalHops += response.peers_looked_up.size();  // hop count is the size of peers_looked_up
+			lookupCount++;
+		}
+
+		// Calculate and print average hop count
+		double averageHopCount = (double) totalHops / lookupCount;
+		System.out.printf("average hop count = %.2f%n", averageHopCount);
 	}
+
+
 
 }
