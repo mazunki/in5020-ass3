@@ -83,3 +83,5 @@ at the end of the output file, we append the average hop count as `average hop c
 - nodecount=1000, m=20
 
 
+# groupclass notes
+each node contains one piece of data
