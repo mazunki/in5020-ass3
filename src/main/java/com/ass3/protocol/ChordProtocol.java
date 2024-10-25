@@ -76,17 +76,40 @@ public class ChordProtocol implements Protocol{
 	 *           2)     find neighbor based on consistent hash (neighbor should be next to the current node in the ring)
 	 *           3)     add neighbor to the peer (uses Peer.addNeighbor() method)
 	 */
+    @Override
 	public void buildOverlayNetwork(){
+		LinkedHashMap<String, NodeInterface> topology = this.network.getTopology();
+		Map<Integer, NodeInterface> ringNodes = new TreeMap<>();  // treemap guarantees nodes are sorted order by their index
+		
+		for(NodeInterface node : topology.values()){
+			int nodeIndex = this.ch.hash(node.getName());
+			
+			node.setId(nodeIndex);
+			ringNodes.put(nodeIndex, node);	
+		}
+
 
 		/*
-		implement this logic
+		 * Every successor tells its predecessor it's their successor in a ring fashion
 		 */
+		NodeInterface prev=null, first=null;
+		for (NodeInterface node: ringNodes.values()){
+			if (first == null) {
+				first = node;
+			}
+			
+			if (prev != null) {
+				prev.addNeighbor(node.getName(), node);
+			}
 
+			prev = node;
+		}
+
+		// complete the ring
+		if (prev != null && first != null) {
+			prev.addNeighbor(first.getName(), first);
+		}
 	}
-
-
-
-
 
 
 	/**
