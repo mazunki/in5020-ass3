@@ -5,7 +5,6 @@ import com.ass3.p2p.NetworkInterface;
 import java.util.HashMap;
 
 public interface Protocol {
-
 	/**
 	 * sets the network
 	 * 
@@ -28,10 +27,11 @@ public interface Protocol {
 	public void setKeys(HashMap<String, Integer> keyIndexes);
 
 	/**
-	 * This method builds the overlay network. It assumes the network object has
-	 * already been set. It generates indexes
-	 * for all the nodes in the network. Based on the indexes it constructs the ring
-	 * and places nodes on the ring.
+	 * This method builds the overlay network. It assumes the network object
+	 * has already been set. It generates indexes for all the nodes in the
+	 * network. Based on the indexes it constructs the ring and places nodes on
+	 * the ring.
+	 *
 	 * algorithm:
 	 * 1) for each node:
 	 * 2) find neighbor based on consistent hash (neighbor should be next to the
@@ -41,28 +41,30 @@ public interface Protocol {
 	public void buildOverlayNetwork();
 
 	/**
-	 * This method builds the finger table. The finger table is the routing table
-	 * used in the chord protocol to perform
-	 * lookup operations. The finger table stores m-entries. Each ith entry points
-	 * to the ith finger of the node.
-	 * Each ith entry stores the information of it's neighbor that is responsible
-	 * for indexes ((n+2^i-1) mod 2^m).
+	 * This method builds the finger table. The finger table is the routing
+	 * table used in the chord protocol to perform lookup operations.
+	 *
 	 * i = 1,...,m.
+	 * - The finger table stores m-entries.
+	 * - Each ith entry points to the ith finger of the node.
+	 * - Each ith entry stores the information of its neighbor that is
+	 * responsible for indexes ((n+2^i-1) mod 2^m).
 	 *
 	 * Each finger table entry should consists of
-	 * 1) start value - (n+2^i-1) mod 2^m. i = 1,...,m
-	 * 2) interval - [finger[i].start, finger[i+1].start)
-	 * 3) node - first node in the ring that is responsible for indexes in the
-	 * interval
+	 * 1) start value  (n+2^i-1) mod 2^m
+	 * 2) interval     [finger[i].start, finger[i+1].start)
+	 * 3) node         first node in the ring that is responsible for indexes in the interval
 	 */
 	public void buildFingerTable();
 
 	/**
 	 * This method performs the lookup operation.
+	 *
 	 * Given the key index, it starts with one of the node in the network and
-	 * follows through the finger table.
-	 * The correct successors would be identified and the request would be checked
-	 * in their finger tables successively.
+	 * follows through the finger table. The correct successors would be
+	 * identified and the request would be checked in their finger tables
+	 * successively.
+	 *
 	 * Finally the request will reach the node that contains the data item.
 	 *
 	 * @param keyIndex index of the key

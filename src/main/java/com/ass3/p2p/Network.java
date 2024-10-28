@@ -4,11 +4,9 @@ import java.util.*;
 
 /**
  * This network class simulates the topology in peer to peer network. The
- * topology consists of set of nodes connected
- * with each other.
+ * topology consists of set of nodes connected to each other.
  */
 public class Network implements NetworkInterface {
-
 	// it indicates the name of the network
 	public String networkName;
 

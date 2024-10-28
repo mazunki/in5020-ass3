@@ -23,8 +23,6 @@ public interface NodeInterface {
 	 */
 	void setId(int id);
 
-	//
-
 	/**
 	 * Node consists of set of neighbors. It returns the corresponding neighbor
 	 * given the name of the neighbor.
@@ -49,11 +47,10 @@ public interface NodeInterface {
 
 	/**
 	 * This method sets the routing table. Different protocols can use routing table
-	 * (eg:- finger table used in chord)
-	 * to route messages. So this method takes any obj that the protocol uses for
-	 * routing table. But parsing the
-	 * routing table should be done at the protocol's side where the routing table
-	 * is implemented
+	 * (eg:- finger table used in chord) to route messages. So this method
+	 * takes any obj that the protocol uses for routing table. But parsing the
+	 * routing table should be done at the protocol's side where the routing
+	 * table is implemented
 	 *
 	 * @param obj
 	 * @see "the routing table should implement toString() method so that it can be printed in the print topology"
@@ -61,12 +58,11 @@ public interface NodeInterface {
 	void setRoutingTable(Object obj);
 
 	/**
-	 * This method returns the routing table. Different protocols can use routing
-	 * table (eg:- finger table used in chord)
-	 * to route messages. So this method takes any obj that the protocol uses for
-	 * routing table. But parsing the
-	 * routing table should be done at the protocol's side where the routing table
-	 * is implemented
+	 * This method returns the routing table. Different protocols can use
+	 * routing table (eg:- finger table used in chord) to route messages. So
+	 * this method takes any obj that the protocol uses for routing table. But
+	 * parsing the routing table should be done at the protocol's side where
+	 * the routing table is implemented
 	 *
 	 * @return the routing table
 	 */
@@ -83,13 +79,11 @@ public interface NodeInterface {
 
 	/**
 	 * This method adds data to the node. Nodes can store different data depending
-	 * on the usage. Different protocols
-	 * might use nodes to store and retrieve different amount of node. (eg:- in
-	 * chord protocol, node stores the data
-	 * items which are indexed using consistent hashing). Generic object is used to
-	 * represent data. so parsing the
-	 * data should be done at the protocol's side which provides implementation of
-	 * the data.
+	 * on the usage. Different protocols might use nodes to store and retrieve
+	 * different amount of node. (eg:- in chord protocol, node stores the data
+	 * items which are indexed using consistent hashing). Generic object is
+	 * used to represent data. so parsing the data should be done at the
+	 * protocol's side which provides implementation of the data.
 	 *
 	 * @param data data object
 	 * @see "the data object should implement toString() method so that it can be printed in the print topology"
@@ -98,13 +92,11 @@ public interface NodeInterface {
 
 	/**
 	 * This method returns data stored in the node. Nodes can store different data
-	 * depending on the usage. Different
-	 * protocols might use nodes to store and retrieve different amount of node.
-	 * (eg:- in chord protocol, node stores
-	 * the data items which are indexed using consistent hashing). Generic object is
-	 * used to represent data. so parsing
-	 * the data should be done at the protocol's side which provides implementation
-	 * of the data.
+	 * depending on the usage. Different protocols might use nodes to store and
+	 * retrieve different amount of node. (eg:- in chord protocol, node stores
+	 * the data items which are indexed using consistent hashing). Generic
+	 * object is used to represent data. so parsing the data should be done at
+	 * the protocol's side which provides implementation of the data.
 	 *
 	 * @return data object
 	 */
@@ -119,5 +111,4 @@ public interface NodeInterface {
 	 * 5) data items stored in the node
 	 */
 	void print();
-
 }

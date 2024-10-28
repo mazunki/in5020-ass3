@@ -11,31 +11,20 @@ import java.util.Set;
 /**
  * The consistent hash function assigns m-bit hash value to data.
  *
- * A hash ring is constructed with the value from 0 to 2^m. Whenever a data item
- * needs a hash value
- * the hash function assigns the data to one point in the hash ring (eg:- each
- * data item would be assigned to the
- * value of 0 to 2^m. It uses sha,md5 hash functions to ensure that the
- * assignment is random.
+ * A hash ring is constructed with the value from 0 to 2^m. Whenever a data
+ * item needs a hash value the hash function assigns the data to one point in
+ * the hash ring (eg:- each data item would be assigned to the value of 0 to
+ * 2^m. It uses SHA,MD5 hash functions to ensure that the assignment is random.
  */
 public class ConsistentHashing {
-
-	// length of the identifier
-	public int m;
+	public int m; // length of the identifier
 
 	/**
-	 *
 	 * @param m the length of the hash value in bits
 	 */
 	public ConsistentHashing(int m) {
 		this.m = m;
 	}
-
-	/*
-	 * @param data
-	 * 
-	 * @return returns
-	 */
 
 	/**
 	 * Calculates hash value for the data
@@ -45,7 +34,6 @@ public class ConsistentHashing {
 	 *         placement of data in the ring).
 	 */
 	public int hash(String data) {
-
 		MessageDigest md = null;
 		try {
 			md = MessageDigest.getInstance("MD5");
@@ -64,7 +52,6 @@ public class ConsistentHashing {
 		res = res.mod(length);
 
 		return res.intValue();
-
 	}
 
 	public static void test1() {
@@ -72,7 +59,6 @@ public class ConsistentHashing {
 		String nodes[] = { "Node 1", "Node 2", "Node 3", "Node 4" };
 		for (int i = 0; i < nodes.length; i++)
 			System.out.println(ch.hash(nodes[i]));
-
 	}
 
 	public static void test2() {
@@ -92,5 +78,4 @@ public class ConsistentHashing {
 		System.out.println(res);
 		System.out.println(set.size());
 	}
-
 }

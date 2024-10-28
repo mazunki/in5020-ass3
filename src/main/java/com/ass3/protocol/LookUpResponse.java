@@ -3,9 +3,9 @@ package com.ass3.protocol;
 import java.util.LinkedHashSet;
 
 /**
- * This class prints the the response of the lookup. This is class prints the
- * names of the nodes whose finger table
- * has been checked, the destination node index, it's name and hop count.
+ * This class prints the response of the lookup. This is class prints the names
+ * of the nodes whose finger table has been checked, the destination node
+ * index, its name and hop count.
  */
 public class LookUpResponse {
 	public LinkedHashSet<String> peers_looked_up;

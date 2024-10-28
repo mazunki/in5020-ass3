@@ -2,7 +2,6 @@ package com.ass3.p2p;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 
 /**
@@ -15,16 +14,15 @@ public class Node implements NodeInterface {
 	// name of the node
 	public String name;
 
-	// id of the node. example: chord uses node indexes. this can represent node
-	// index.
+	// id of the node. example: chord uses node indexes. this can represent
+	// node index.
 	public int id;
 
 	public HashMap<String, NodeInterface> neighbors;
 
-	// this routing table can be used to implement different routing tables used in
-	// the protocol
-	// for example finger table used by chord protocol can be populated in the
-	// routing table
+	// this routing table can be used to implement different routing tables
+	// used in the protocol for example finger table used by chord protocol can
+	// be populated in the routing table
 	public Object routingTable;
 
 	// this data can store set of objects. For example, key indexes used in the
@@ -98,11 +96,10 @@ public class Node implements NodeInterface {
 		for (NodeInterface node : neightbors) {
 			System.out.print(node.getName() + "\t");
 		}
-		// Note: This introduces backward dependency on the protocols. The protocol
-		// should implement a routing table
-		// in a way that overrides the toString() method. so that the contents of the
-		// routing table can be printed
-		// here
+		// Note: This introduces backward dependency on the protocols. The
+		// protocol should implement a routing table in a way that overrides
+		// the toString() method. so that the contents of the routing table can
+		// be printed here
 		if (routingTable != null) {
 			System.out.print("\t" + this.routingTable.toString());
 		}
@@ -110,7 +107,5 @@ public class Node implements NodeInterface {
 		if (data != null) {
 			System.out.println("Data : " + this.data.toString());
 		}
-
 	}
-
 }
