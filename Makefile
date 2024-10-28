@@ -2,32 +2,46 @@ JAVAC = javac
 JAR = jar
 JAVA_FLAGS = -Xlint:unchecked
 
-JAVA_FILES = $(shell find src/main/java -name "*.java")
-CLASS_FILES = $(JAVA_FILES:.java=.class)
-TARGET = target/classes
-BINDIR = bin
-JAR_TARGET = $(BINDIR)/chordprotocol.jar
-MANIFEST = src/resources/manifest.txt
-LOG_DIR = logs
+TARGET_DIR = target
+SRC_DIR = src/main/java
+TEST_SRC_DIR = test
+BUILD_DIR = $(TARGET_DIR)/classes
+TEST_BUILD_DIR = $(TARGET_DIR)/test-classes
+JAR_FILE = $(TARGET_DIR)/solution.jar
+
+SOURCES = $(shell find $(SRC_DIR) -name "*.java")
+TESTS = $(shell find $(TEST_SRC_DIR) -name "*.java")
 
 NODE_COUNT ?= 10
 BIT_LENGTH ?= 10
 
-all: $(JAR_TARGET)
+$(BUILD_DIR)/%.class: $(SRC_DIR)/%.java
+	@mkdir -p $(dir $@)
+	$(JAVAC) $(JAVA_FLAGS) -cp $(BUILD_DIR):$(SRC_DIR) $<
 
-$(JAR_TARGET): $(CLASS_FILES)
-	@mkdir -p $(BINDIR)
-	$(JAR) -cfm $(JAR_TARGET) $(MANIFEST) -C $(TARGET) .
+$(TEST_BUILD_DIR)/%.class: $(TEST_SRC_DIR)/%.java
+	@mkdir -p $(dir $@)
+	$(JAVAC) $(JAVA_FLAGS) -cp $(BUILD_DIR):$(SRC_DIR) -d $(TEST_BUILD_DIR) $<
 
-%.class: %.java
-	@mkdir -p $(TARGET)
-	$(JAVAC) $(JAVA_FLAGS) -d $(TARGET) -sourcepath src/main/java $<
+build: $(patsubst $(SRC_DIR)/%.java,$(BUILD_DIR)/%.class,$(SOURCES))
+	
+test-build: $(patsubst $(TEST_SRC_DIR)/%.java,$(TEST_BUILD_DIR)/%.class,$(TESTS))
+
+test: test-build
+	@for test_class in $(shell find $(TEST_BUILD_DIR) -name "*.class" | sed 's|$(TEST_BUILD_DIR)/||;s|\.class||' | tr '/' '.'); do \
+		echo "Running $$test_class..."; \
+		java -cp $(BUILD_DIR):$(TEST_BUILD_DIR) $$test_class || { echo "$$test_class failed"; exit 1; }; \
+	done
+	@echo "All tests passed."
+
+jar: build
+	jar cfe $(JAR_FILE) com.ass3.Simulator -C $(BUILD_DIR) .
 
 clean:
-	rm -rf $(TARGET) $(JAR_TARGET) $(LOG_DIR)
+	rm -rf $(BUILD_DIR) $(TEST_BUILD_DIR)
 
 run:
-	java -cp $(JAR_TARGET) com.ass3.Simulator $(NODE_COUNT) $(BIT_LENGTH)
+	java -jar $(JAR_TARGET) $(NODE_COUNT) $(BIT_LENGTH)
 
 rerun: clean all run
 
@@ -46,3 +60,4 @@ sim: $(JAR_TARGET)
 	make run case2 | tee $(LOG_DIR)/sim-100_20.log
 	make run case3 | tee $(LOG_DIR)/sim-1000_20.log
 
+all: clean build test jar
