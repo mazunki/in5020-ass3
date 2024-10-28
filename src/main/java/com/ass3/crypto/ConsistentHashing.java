@@ -32,8 +32,6 @@ public class ConsistentHashing {
 	}
 
 	/*
-	 * 
-	 * 
 	 * @param data
 	 * 
 	 * @return returns
