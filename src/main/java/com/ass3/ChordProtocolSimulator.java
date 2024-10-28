@@ -186,7 +186,6 @@ public class ChordProtocolSimulator {
 	 * @return name of the node
 	 */
 	public String findPeerName(int peerIndex) {
-
 		int peerCount = nodeCount;
 		for (int i = 1; i < peerCount + 1; i++) {
 			String name = "Node " + i;
@@ -205,7 +204,6 @@ public class ChordProtocolSimulator {
 	 * in the node such as neighbors, routing table, data.
 	 */
 	public void printNetwork() {
-
 		// gets the network from the protocol
 		NetworkInterface network = protocol.getNetwork();
 
@@ -255,9 +253,7 @@ public class ChordProtocolSimulator {
 	 * index (check response) is used for the comparison.
 	 */
 	public void testLookUp() {
-
 		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
-
 			// lookup the key index
 			LookUpResponse response = protocol.lookUp(entry.getValue());
 
