@@ -27,8 +27,8 @@ public class ChordProtocol implements Protocol {
 	public HashMap<String, Integer> keyIndexes;
 
 	public ChordProtocol(int m) {
-		if (m > 31) {
-			throw new IllegalArgumentException("int is max 2^32-1. m=31 max because signed");
+		if (m > 30) {
+			throw new IllegalArgumentException("int is max 2^32-1. m=30 max because signed");
 		}
 		this.m = m;
 		setHashFunction();
@@ -104,7 +104,11 @@ public class ChordProtocol implements Protocol {
 				int nextStart = (index + (1 << i)) % ringSize;
 				int thisEnd = (nextStart - 1 + ringSize) % ringSize;
 				if (i == m) {
-					thisEnd = fingerTable.getEntries().getFirst().getStart() - 1;
+					thisEnd = (fingerTable.getEntries().getFirst().getStart() - 1) % ringSize;
+				}
+				
+				if (thisEnd < 0) {
+					thisEnd = (1<<i) - 1;
 				}
 
 				NodeInterface successor = getImmediateNextNodeInNetwork(thisStart);
