@@ -1,6 +1,7 @@
 package com.ass3.protocol;
 
 import java.util.LinkedHashSet;
+import java.util.StringJoiner;
 
 /**
  * This class prints the response of the lookup. This is class prints the names
@@ -19,14 +20,17 @@ public class LookUpResponse {
 	}
 
 	public String toString() {
-		String result = "";
-		result = result.concat("peers : ");
+		StringJoiner output = new StringJoiner("; ");
+
+		StringJoiner peers = new StringJoiner(", ");
 		for (String peer : peers_looked_up) {
-			result = result.concat(peer + "\t");
+			peers.add("("+peer+")");
 		}
-		result = result.concat("\t hop count : " + peers_looked_up.size());
-		result = result.concat("\t node index : " + node_index);
-		result = result.concat("\t node name : " + node_name);
-		return result;
+
+		output.add("hops: " + peers_looked_up.size());
+		output.add("node_index: " + node_index);
+		output.add("node_name: " + node_name);
+		output.add("peers: " + peers);
+		return output.toString();
 	}
 }

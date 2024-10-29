@@ -40,7 +40,7 @@ jar: build
 clean:
 	rm -rf $(BUILD_DIR) $(TEST_BUILD_DIR)
 
-run:
+run: jar
 	java -jar $(JAR_FILE) $(NODE_COUNT) $(BIT_LENGTH)
 
 rerun: clean all run
@@ -56,7 +56,7 @@ case3:
 
 sim: $(JAR_FILE)
 	mkdir -p $(LOG_DIR)
-	make run case1 | tee $(LOG_DIR)/sim-100_20.log
+	make run case1 | tee $(LOG_DIR)/sim-10_10.log
 	make run case2 | tee $(LOG_DIR)/sim-100_20.log
 	make run case3 | tee $(LOG_DIR)/sim-1000_20.log
 

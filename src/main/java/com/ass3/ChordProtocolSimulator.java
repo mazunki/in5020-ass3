@@ -306,17 +306,16 @@ public class ChordProtocolSimulator {
 		printRing();
 		printNetwork();
 
+		// testLookUp();
+
 		int totalHops = 0;
 		int lookupCount = 0;
 
 		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
 			int keyIndex = entry.getValue();
-			System.err.println(entry.getKey() + " -> " + keyIndex);
-
 			LookUpResponse response = protocol.lookUp(keyIndex);
-			System.err.println("Got response: " + response);
-
-			System.out.println(response);
+			System.out.println("Looking for key: " + entry.getKey() + " => " + entry.getValue());
+			System.out.println(response + "\n");
 
 			totalHops += response.peers_looked_up.size();
 			lookupCount++;
