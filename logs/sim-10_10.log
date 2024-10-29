@@ -1,0 +1,313 @@
+make[1]: Entering directory '/home/mazunki/uio.git/IN5020/ass3'
+javac -Xlint:unchecked -d target/classes -cp target/classes:src/main/java src/main/java/com/ass3/crypto/ConsistentHashing.java
+javac -Xlint:unchecked -d target/classes -cp target/classes:src/main/java src/main/java/com/ass3/protocol/Protocol.java
+javac -Xlint:unchecked -d target/classes -cp target/classes:src/main/java src/main/java/com/ass3/protocol/FingerTable.java
+javac -Xlint:unchecked -d target/classes -cp target/classes:src/main/java src/main/java/com/ass3/protocol/ChordProtocol.java
+javac -Xlint:unchecked -d target/classes -cp target/classes:src/main/java src/main/java/com/ass3/p2p/Network.java
+javac -Xlint:unchecked -d target/classes -cp target/classes:src/main/java src/main/java/com/ass3/Simulator.java
+jar cfe target/solution.jar com.ass3.Simulator -C target/classes .
+java -jar target/solution.jar 10 10
+........printing ring..............
+Node 1 --- Node 7 --- Node 8 --- Node 6 --- Node 5 --- Node 9 --- Node 4 --- Node 10 --- Node 3 --- Node 2 --- Node 1
+.....................................
+..............Printing network topology..............
+Node : Node 1	Index: 333	Neighbors: Node 7		FingerTable{
+  Finger{start=334, interval=(334,334), node=Node 7(id=480)}
+  Finger{start=335, interval=(335,336), node=Node 7(id=480)}
+  Finger{start=337, interval=(337,340), node=Node 7(id=480)}
+  Finger{start=341, interval=(341,348), node=Node 7(id=480)}
+  Finger{start=349, interval=(349,364), node=Node 7(id=480)}
+  Finger{start=365, interval=(365,396), node=Node 7(id=480)}
+  Finger{start=397, interval=(397,460), node=Node 7(id=480)}
+  Finger{start=461, interval=(461,588), node=Node 7(id=480)}
+  Finger{start=589, interval=(589,844), node=Node 8(id=601)}
+  Finger{start=845, interval=(845,333), node=Node 5(id=865)}
+}
+Data : []
+Node : Node 2	Index: 266	Neighbors: Node 1		FingerTable{
+  Finger{start=267, interval=(267,267), node=Node 1(id=333)}
+  Finger{start=268, interval=(268,269), node=Node 1(id=333)}
+  Finger{start=270, interval=(270,273), node=Node 1(id=333)}
+  Finger{start=274, interval=(274,281), node=Node 1(id=333)}
+  Finger{start=282, interval=(282,297), node=Node 1(id=333)}
+  Finger{start=298, interval=(298,329), node=Node 1(id=333)}
+  Finger{start=330, interval=(330,393), node=Node 1(id=333)}
+  Finger{start=394, interval=(394,521), node=Node 7(id=480)}
+  Finger{start=522, interval=(522,777), node=Node 8(id=601)}
+  Finger{start=778, interval=(778,266), node=Node 5(id=865)}
+}
+Data : [144]
+Node : Node 3	Index: 139	Neighbors: Node 2		FingerTable{
+  Finger{start=140, interval=(140,140), node=Node 2(id=266)}
+  Finger{start=141, interval=(141,142), node=Node 2(id=266)}
+  Finger{start=143, interval=(143,146), node=Node 2(id=266)}
+  Finger{start=147, interval=(147,154), node=Node 2(id=266)}
+  Finger{start=155, interval=(155,170), node=Node 2(id=266)}
+  Finger{start=171, interval=(171,202), node=Node 2(id=266)}
+  Finger{start=203, interval=(203,266), node=Node 2(id=266)}
+  Finger{start=267, interval=(267,394), node=Node 1(id=333)}
+  Finger{start=395, interval=(395,650), node=Node 7(id=480)}
+  Finger{start=651, interval=(651,139), node=Node 6(id=666)}
+}
+Data : []
+Node : Node 4	Index: 105	Neighbors: Node 10		FingerTable{
+  Finger{start=106, interval=(106,106), node=Node 10(id=131)}
+  Finger{start=107, interval=(107,108), node=Node 10(id=131)}
+  Finger{start=109, interval=(109,112), node=Node 10(id=131)}
+  Finger{start=113, interval=(113,120), node=Node 10(id=131)}
+  Finger{start=121, interval=(121,136), node=Node 10(id=131)}
+  Finger{start=137, interval=(137,168), node=Node 3(id=139)}
+  Finger{start=169, interval=(169,232), node=Node 2(id=266)}
+  Finger{start=233, interval=(233,360), node=Node 2(id=266)}
+  Finger{start=361, interval=(361,616), node=Node 7(id=480)}
+  Finger{start=617, interval=(617,105), node=Node 6(id=666)}
+}
+Data : []
+Node : Node 5	Index: 865	Neighbors: Node 9		FingerTable{
+  Finger{start=866, interval=(866,866), node=Node 9(id=1006)}
+  Finger{start=867, interval=(867,868), node=Node 9(id=1006)}
+  Finger{start=869, interval=(869,872), node=Node 9(id=1006)}
+  Finger{start=873, interval=(873,880), node=Node 9(id=1006)}
+  Finger{start=881, interval=(881,896), node=Node 9(id=1006)}
+  Finger{start=897, interval=(897,928), node=Node 9(id=1006)}
+  Finger{start=929, interval=(929,992), node=Node 9(id=1006)}
+  Finger{start=993, interval=(993,96), node=Node 9(id=1006)}
+  Finger{start=97, interval=(97,352), node=Node 4(id=105)}
+  Finger{start=353, interval=(353,865), node=Node 7(id=480)}
+}
+Data : [669]
+Node : Node 6	Index: 666	Neighbors: Node 5		FingerTable{
+  Finger{start=667, interval=(667,667), node=Node 5(id=865)}
+  Finger{start=668, interval=(668,669), node=Node 5(id=865)}
+  Finger{start=670, interval=(670,673), node=Node 5(id=865)}
+  Finger{start=674, interval=(674,681), node=Node 5(id=865)}
+  Finger{start=682, interval=(682,697), node=Node 5(id=865)}
+  Finger{start=698, interval=(698,729), node=Node 5(id=865)}
+  Finger{start=730, interval=(730,793), node=Node 5(id=865)}
+  Finger{start=794, interval=(794,921), node=Node 5(id=865)}
+  Finger{start=922, interval=(922,153), node=Node 9(id=1006)}
+  Finger{start=154, interval=(154,666), node=Node 2(id=266)}
+}
+Data : []
+Node : Node 7	Index: 480	Neighbors: Node 8		FingerTable{
+  Finger{start=481, interval=(481,481), node=Node 8(id=601)}
+  Finger{start=482, interval=(482,483), node=Node 8(id=601)}
+  Finger{start=484, interval=(484,487), node=Node 8(id=601)}
+  Finger{start=488, interval=(488,495), node=Node 8(id=601)}
+  Finger{start=496, interval=(496,511), node=Node 8(id=601)}
+  Finger{start=512, interval=(512,543), node=Node 8(id=601)}
+  Finger{start=544, interval=(544,607), node=Node 8(id=601)}
+  Finger{start=608, interval=(608,735), node=Node 6(id=666)}
+  Finger{start=736, interval=(736,991), node=Node 5(id=865)}
+  Finger{start=992, interval=(992,480), node=Node 9(id=1006)}
+}
+Data : [382]
+Node : Node 8	Index: 601	Neighbors: Node 6		FingerTable{
+  Finger{start=602, interval=(602,602), node=Node 6(id=666)}
+  Finger{start=603, interval=(603,604), node=Node 6(id=666)}
+  Finger{start=605, interval=(605,608), node=Node 6(id=666)}
+  Finger{start=609, interval=(609,616), node=Node 6(id=666)}
+  Finger{start=617, interval=(617,632), node=Node 6(id=666)}
+  Finger{start=633, interval=(633,664), node=Node 6(id=666)}
+  Finger{start=665, interval=(665,728), node=Node 6(id=666)}
+  Finger{start=729, interval=(729,856), node=Node 5(id=865)}
+  Finger{start=857, interval=(857,88), node=Node 5(id=865)}
+  Finger{start=89, interval=(89,601), node=Node 4(id=105)}
+}
+Data : [489]
+Node : Node 9	Index: 1006	Neighbors: Node 4		FingerTable{
+  Finger{start=1007, interval=(1007,1007), node=Node 4(id=105)}
+  Finger{start=1008, interval=(1008,1009), node=Node 4(id=105)}
+  Finger{start=1010, interval=(1010,1013), node=Node 4(id=105)}
+  Finger{start=1014, interval=(1014,1021), node=Node 4(id=105)}
+  Finger{start=1022, interval=(1022,13), node=Node 4(id=105)}
+  Finger{start=14, interval=(14,45), node=Node 4(id=105)}
+  Finger{start=46, interval=(46,109), node=Node 4(id=105)}
+  Finger{start=110, interval=(110,237), node=Node 10(id=131)}
+  Finger{start=238, interval=(238,493), node=Node 2(id=266)}
+  Finger{start=494, interval=(494,1006), node=Node 8(id=601)}
+}
+Data : [932]
+Node : Node 10	Index: 131	Neighbors: Node 3		FingerTable{
+  Finger{start=132, interval=(132,132), node=Node 3(id=139)}
+  Finger{start=133, interval=(133,134), node=Node 3(id=139)}
+  Finger{start=135, interval=(135,138), node=Node 3(id=139)}
+  Finger{start=139, interval=(139,146), node=Node 3(id=139)}
+  Finger{start=147, interval=(147,162), node=Node 2(id=266)}
+  Finger{start=163, interval=(163,194), node=Node 2(id=266)}
+  Finger{start=195, interval=(195,258), node=Node 2(id=266)}
+  Finger{start=259, interval=(259,386), node=Node 2(id=266)}
+  Finger{start=387, interval=(387,642), node=Node 7(id=480)}
+  Finger{start=643, interval=(643,131), node=Node 6(id=666)}
+}
+Data : []
+......................................................
+hops: 2; node_index: 1006; node_name: Node 9; peers: (Node 1), (Node 5)
+✅ lookup successful for key 1
+hops: 4; node_index: 266; node_name: Node 2; peers: (Node 1), (Node 5), (Node 4), (Node 3)
+✅ lookup successful for key 2
+hops: 1; node_index: 480; node_name: Node 7; peers: (Node 1)
+✅ lookup successful for key 3
+hops: 3; node_index: 865; node_name: Node 5; peers: (Node 1), (Node 8), (Node 6)
+✅ lookup successful for key 4
+hops: 2; node_index: 601; node_name: Node 8; peers: (Node 1), (Node 7)
+✅ lookup successful for key 5
+summary:
+  ok = 5/5
+  wrong = 0/5
+average hop count = 2.00
+make run NODE_COUNT=10 BIT_LENGTH=10
+make[2]: Entering directory '/home/mazunki/uio.git/IN5020/ass3'
+jar cfe target/solution.jar com.ass3.Simulator -C target/classes .
+java -jar target/solution.jar 10 10
+........printing ring..............
+Node 1 --- Node 7 --- Node 8 --- Node 6 --- Node 5 --- Node 9 --- Node 4 --- Node 10 --- Node 3 --- Node 2 --- Node 1
+.....................................
+..............Printing network topology..............
+Node : Node 1	Index: 333	Neighbors: Node 7		FingerTable{
+  Finger{start=334, interval=(334,334), node=Node 7(id=480)}
+  Finger{start=335, interval=(335,336), node=Node 7(id=480)}
+  Finger{start=337, interval=(337,340), node=Node 7(id=480)}
+  Finger{start=341, interval=(341,348), node=Node 7(id=480)}
+  Finger{start=349, interval=(349,364), node=Node 7(id=480)}
+  Finger{start=365, interval=(365,396), node=Node 7(id=480)}
+  Finger{start=397, interval=(397,460), node=Node 7(id=480)}
+  Finger{start=461, interval=(461,588), node=Node 7(id=480)}
+  Finger{start=589, interval=(589,844), node=Node 8(id=601)}
+  Finger{start=845, interval=(845,333), node=Node 5(id=865)}
+}
+Data : []
+Node : Node 2	Index: 266	Neighbors: Node 1		FingerTable{
+  Finger{start=267, interval=(267,267), node=Node 1(id=333)}
+  Finger{start=268, interval=(268,269), node=Node 1(id=333)}
+  Finger{start=270, interval=(270,273), node=Node 1(id=333)}
+  Finger{start=274, interval=(274,281), node=Node 1(id=333)}
+  Finger{start=282, interval=(282,297), node=Node 1(id=333)}
+  Finger{start=298, interval=(298,329), node=Node 1(id=333)}
+  Finger{start=330, interval=(330,393), node=Node 1(id=333)}
+  Finger{start=394, interval=(394,521), node=Node 7(id=480)}
+  Finger{start=522, interval=(522,777), node=Node 8(id=601)}
+  Finger{start=778, interval=(778,266), node=Node 5(id=865)}
+}
+Data : [144]
+Node : Node 3	Index: 139	Neighbors: Node 2		FingerTable{
+  Finger{start=140, interval=(140,140), node=Node 2(id=266)}
+  Finger{start=141, interval=(141,142), node=Node 2(id=266)}
+  Finger{start=143, interval=(143,146), node=Node 2(id=266)}
+  Finger{start=147, interval=(147,154), node=Node 2(id=266)}
+  Finger{start=155, interval=(155,170), node=Node 2(id=266)}
+  Finger{start=171, interval=(171,202), node=Node 2(id=266)}
+  Finger{start=203, interval=(203,266), node=Node 2(id=266)}
+  Finger{start=267, interval=(267,394), node=Node 1(id=333)}
+  Finger{start=395, interval=(395,650), node=Node 7(id=480)}
+  Finger{start=651, interval=(651,139), node=Node 6(id=666)}
+}
+Data : []
+Node : Node 4	Index: 105	Neighbors: Node 10		FingerTable{
+  Finger{start=106, interval=(106,106), node=Node 10(id=131)}
+  Finger{start=107, interval=(107,108), node=Node 10(id=131)}
+  Finger{start=109, interval=(109,112), node=Node 10(id=131)}
+  Finger{start=113, interval=(113,120), node=Node 10(id=131)}
+  Finger{start=121, interval=(121,136), node=Node 10(id=131)}
+  Finger{start=137, interval=(137,168), node=Node 3(id=139)}
+  Finger{start=169, interval=(169,232), node=Node 2(id=266)}
+  Finger{start=233, interval=(233,360), node=Node 2(id=266)}
+  Finger{start=361, interval=(361,616), node=Node 7(id=480)}
+  Finger{start=617, interval=(617,105), node=Node 6(id=666)}
+}
+Data : []
+Node : Node 5	Index: 865	Neighbors: Node 9		FingerTable{
+  Finger{start=866, interval=(866,866), node=Node 9(id=1006)}
+  Finger{start=867, interval=(867,868), node=Node 9(id=1006)}
+  Finger{start=869, interval=(869,872), node=Node 9(id=1006)}
+  Finger{start=873, interval=(873,880), node=Node 9(id=1006)}
+  Finger{start=881, interval=(881,896), node=Node 9(id=1006)}
+  Finger{start=897, interval=(897,928), node=Node 9(id=1006)}
+  Finger{start=929, interval=(929,992), node=Node 9(id=1006)}
+  Finger{start=993, interval=(993,96), node=Node 9(id=1006)}
+  Finger{start=97, interval=(97,352), node=Node 4(id=105)}
+  Finger{start=353, interval=(353,865), node=Node 7(id=480)}
+}
+Data : [669]
+Node : Node 6	Index: 666	Neighbors: Node 5		FingerTable{
+  Finger{start=667, interval=(667,667), node=Node 5(id=865)}
+  Finger{start=668, interval=(668,669), node=Node 5(id=865)}
+  Finger{start=670, interval=(670,673), node=Node 5(id=865)}
+  Finger{start=674, interval=(674,681), node=Node 5(id=865)}
+  Finger{start=682, interval=(682,697), node=Node 5(id=865)}
+  Finger{start=698, interval=(698,729), node=Node 5(id=865)}
+  Finger{start=730, interval=(730,793), node=Node 5(id=865)}
+  Finger{start=794, interval=(794,921), node=Node 5(id=865)}
+  Finger{start=922, interval=(922,153), node=Node 9(id=1006)}
+  Finger{start=154, interval=(154,666), node=Node 2(id=266)}
+}
+Data : []
+Node : Node 7	Index: 480	Neighbors: Node 8		FingerTable{
+  Finger{start=481, interval=(481,481), node=Node 8(id=601)}
+  Finger{start=482, interval=(482,483), node=Node 8(id=601)}
+  Finger{start=484, interval=(484,487), node=Node 8(id=601)}
+  Finger{start=488, interval=(488,495), node=Node 8(id=601)}
+  Finger{start=496, interval=(496,511), node=Node 8(id=601)}
+  Finger{start=512, interval=(512,543), node=Node 8(id=601)}
+  Finger{start=544, interval=(544,607), node=Node 8(id=601)}
+  Finger{start=608, interval=(608,735), node=Node 6(id=666)}
+  Finger{start=736, interval=(736,991), node=Node 5(id=865)}
+  Finger{start=992, interval=(992,480), node=Node 9(id=1006)}
+}
+Data : [382]
+Node : Node 8	Index: 601	Neighbors: Node 6		FingerTable{
+  Finger{start=602, interval=(602,602), node=Node 6(id=666)}
+  Finger{start=603, interval=(603,604), node=Node 6(id=666)}
+  Finger{start=605, interval=(605,608), node=Node 6(id=666)}
+  Finger{start=609, interval=(609,616), node=Node 6(id=666)}
+  Finger{start=617, interval=(617,632), node=Node 6(id=666)}
+  Finger{start=633, interval=(633,664), node=Node 6(id=666)}
+  Finger{start=665, interval=(665,728), node=Node 6(id=666)}
+  Finger{start=729, interval=(729,856), node=Node 5(id=865)}
+  Finger{start=857, interval=(857,88), node=Node 5(id=865)}
+  Finger{start=89, interval=(89,601), node=Node 4(id=105)}
+}
+Data : [489]
+Node : Node 9	Index: 1006	Neighbors: Node 4		FingerTable{
+  Finger{start=1007, interval=(1007,1007), node=Node 4(id=105)}
+  Finger{start=1008, interval=(1008,1009), node=Node 4(id=105)}
+  Finger{start=1010, interval=(1010,1013), node=Node 4(id=105)}
+  Finger{start=1014, interval=(1014,1021), node=Node 4(id=105)}
+  Finger{start=1022, interval=(1022,13), node=Node 4(id=105)}
+  Finger{start=14, interval=(14,45), node=Node 4(id=105)}
+  Finger{start=46, interval=(46,109), node=Node 4(id=105)}
+  Finger{start=110, interval=(110,237), node=Node 10(id=131)}
+  Finger{start=238, interval=(238,493), node=Node 2(id=266)}
+  Finger{start=494, interval=(494,1006), node=Node 8(id=601)}
+}
+Data : [932]
+Node : Node 10	Index: 131	Neighbors: Node 3		FingerTable{
+  Finger{start=132, interval=(132,132), node=Node 3(id=139)}
+  Finger{start=133, interval=(133,134), node=Node 3(id=139)}
+  Finger{start=135, interval=(135,138), node=Node 3(id=139)}
+  Finger{start=139, interval=(139,146), node=Node 3(id=139)}
+  Finger{start=147, interval=(147,162), node=Node 2(id=266)}
+  Finger{start=163, interval=(163,194), node=Node 2(id=266)}
+  Finger{start=195, interval=(195,258), node=Node 2(id=266)}
+  Finger{start=259, interval=(259,386), node=Node 2(id=266)}
+  Finger{start=387, interval=(387,642), node=Node 7(id=480)}
+  Finger{start=643, interval=(643,131), node=Node 6(id=666)}
+}
+Data : []
+......................................................
+hops: 2; node_index: 1006; node_name: Node 9; peers: (Node 1), (Node 5)
+✅ lookup successful for key 1
+hops: 4; node_index: 266; node_name: Node 2; peers: (Node 1), (Node 5), (Node 4), (Node 3)
+✅ lookup successful for key 2
+hops: 1; node_index: 480; node_name: Node 7; peers: (Node 1)
+✅ lookup successful for key 3
+hops: 3; node_index: 865; node_name: Node 5; peers: (Node 1), (Node 8), (Node 6)
+✅ lookup successful for key 4
+hops: 2; node_index: 601; node_name: Node 8; peers: (Node 1), (Node 7)
+✅ lookup successful for key 5
+summary:
+  ok = 5/5
+  wrong = 0/5
+average hop count = 2.00
+make[2]: Leaving directory '/home/mazunki/uio.git/IN5020/ass3'
+make[1]: Leaving directory '/home/mazunki/uio.git/IN5020/ass3'
