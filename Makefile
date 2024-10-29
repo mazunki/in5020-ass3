@@ -2,6 +2,7 @@ JAVAC = javac
 JAR = jar
 JAVA_FLAGS = -Xlint:unchecked
 
+LOG_DIR = logs/
 TARGET_DIR = target
 SRC_DIR = src/main/java
 TEST_SRC_DIR = src/test/java
