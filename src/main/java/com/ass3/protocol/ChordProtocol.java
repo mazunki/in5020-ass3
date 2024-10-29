@@ -27,6 +27,9 @@ public class ChordProtocol implements Protocol {
 	public HashMap<String, Integer> keyIndexes;
 
 	public ChordProtocol(int m) {
+		if (m > 31) {
+			throw new IllegalArgumentException("int is max 2^32-1. m=31 max because signed");
+		}
 		this.m = m;
 		setHashFunction();
 		this.keyIndexes = new HashMap<String, Integer>();
