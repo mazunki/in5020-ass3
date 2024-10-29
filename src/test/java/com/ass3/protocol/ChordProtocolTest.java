@@ -3,11 +3,11 @@ package com.ass3.protocol;
 import java.util.List;
 import java.util.StringJoiner;
 
-import com.ass3.*;
-import com.ass3.p2p.*;
-import com.ass3.protocol.FingerTable;
+import com.ass3.Assert;
+import com.ass3.p2p.DataEntry;
+import com.ass3.p2p.Network;
+import com.ass3.p2p.NodeInterface;
 import com.ass3.protocol.FingerTable.Finger;
-import com.ass3.crypto.*;
 
 public class ChordProtocolTest {
 	private static final int m = 10;
@@ -500,5 +500,4 @@ public class ChordProtocolTest {
         response = chordProtocol.lookUp(250);
         Assert.assertEquals(node2.getId(), response.node_index, "data lookup failed for key 269");
     }
-
 }
