@@ -72,7 +72,9 @@ public class ChordProtocol implements Protocol {
 				continue;
 			}
 
-			prev.addNeighbor(node.getName(), node);
+			if (!prev.getNeighbors().contains(node)) {
+				prev.addNeighbor(node.getName(), node);
+			}
 			prev = node;
 		}
 
@@ -81,7 +83,9 @@ public class ChordProtocol implements Protocol {
 		}
 
 		// complete the ring
-		prev.addNeighbor(first.getName(), first);
+		if (!prev.getNeighbors().contains(first)) {
+			prev.addNeighbor(first.getName(), first);
+		}
 	}
 
 	public void buildFingerTable() {
@@ -127,34 +131,38 @@ public class ChordProtocol implements Protocol {
 
 		while (!historyNodes.contains(current.getName())) {
 			historyNodes.add(current.getName());
-			int currentIndex = current.getId();
 
 			NodeInterface successor = current.getSuccessor();
 
 			FingerTable fingerTable = (FingerTable) current.getRoutingTable();
-			if (keyIndex == 350) {
-				System.out.println("" + keyIndex + "," + currentIndex + ", "+ current.getName() + "," + successor.getId() + ", "+ successor.getName());
+
+			if (current.getId() == keyIndex) {
+				return new LookUpResponse(historyNodes, current.getId(), current.getName());
 			}
 
-			if (currentIndex == keyIndex) {
-				return new LookUpResponse(historyNodes, currentIndex, current.getName());
+			boolean ourResponsibility = FingerTable.contains(keyIndex, current.getId(), successor.getId(), this.m);
+			if (ourResponsibility) {
+				return new LookUpResponse(historyNodes, successor.getId(), successor.getName());
 			}
 
-			// NOTE: why does node 1 think it's responsible for 350?
-			boolean weAreResponsible = FingerTable.contains(keyIndex, currentIndex, successor.getId() - 1, this.m);
-
-			if (weAreResponsible) {
-				return new LookUpResponse(historyNodes, currentIndex, current.getName());
+			Finger closestPreceding = null;
+			for (int i = this.m - 1; i >= 0; i--) {
+				Finger finger = fingerTable.getFinger(i);
+				if (FingerTable.contains(keyIndex, finger.getNode().getId(), current.getId(), this.m)) {
+					closestPreceding = finger;
+					break;
+				}
 			}
 
-			Finger finger = fingerTable.getResponsibleFinger(keyIndex);
-			NodeInterface closestNode = finger.getNode();
-
-			current = closestNode;
+			if (closestPreceding != null) {
+				current = closestPreceding.getNode();
+			} else {
+				current = successor;
+			}
 		}
 
-		//return new LookUpResponse(historyNodes, current.getId(), current.getName());
-		throw new RuntimeException("no such key: " + keyIndex + "history: " + historyNodes + ". current: " + current.getName());
+		return new LookUpResponse(historyNodes, current.getId(), current.getName());
+		//throw new RuntimeException("no such key: " + keyIndex + "history: " + historyNodes + ". current: " + current.getName());
 	}
 
 	public Object getDataByKey(int keyIndex) {

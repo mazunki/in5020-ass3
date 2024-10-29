@@ -17,9 +17,8 @@ public class FingerTable {
 		this.entries.add(new Finger(start, end, successor));
 	}
 
-	// fingers are 1-indexed
 	public Finger getFinger(int index) {
-		return this.entries.get(index-1);
+		return this.entries.get(index);
 	}
 
 	public Finger getResponsibleFinger(int keyIndex) {
@@ -36,13 +35,15 @@ public class FingerTable {
 		for (int i = entries.size() - 1; i >= 0; i--) {
 			Finger finger = entries.get(i);
 			NodeInterface fingerNode = finger.getNode();
-			if (fingerNode.getId() != keyIndex && contains(fingerNode.getId(), finger.getStart(), finger.getIntervalEnd())) {
-				if (fingerNode.getId() < keyIndex || (finger.getStart() < finger.getIntervalEnd())) {
-					return finger;
-				}
+			if (fingerNode.getId() == keyIndex) {
+				continue;
+			}
+
+			if (contains(fingerNode.getId(), finger.getStart(), finger.getIntervalEnd())) {
+				return finger;
 			}
 		}
-		return entries.get(0);  // fallback to the first entry if no preceding finger found
+		return null;
 	}
 
 	public int size() {

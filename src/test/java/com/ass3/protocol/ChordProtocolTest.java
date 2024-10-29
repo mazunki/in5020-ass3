@@ -306,7 +306,7 @@ public class ChordProtocolTest {
 			StringJoiner sj = new StringJoiner(", ");
 			for (int i = 1; i <= m; i++) {
 				int expectedId = (nodeId + (1 << i - 1)) % ringSize; // (node id + 2^(i-1)) mod 2^m
-				Finger finger = fingerTable.getFinger(i);
+				Finger finger = fingerTable.getFinger(i-1);
 				// NodeInterface fingerNode = finger.getNode();
 
 				sj.add(Integer.toString(expectedId));
@@ -368,14 +368,14 @@ public class ChordProtocolTest {
     public static void testFingerTableRouting() {
         System.out.println("Running testFingerTableRouting...");
 
-        Network network = Network.createNetwork("test", 4);
+        Network network = Network.createNetwork("test", 10);
         ChordProtocol chordProtocol = new ChordProtocol(ChordProtocolTest.m);
         chordProtocol.setNetwork(network);
         chordProtocol.buildOverlayNetwork();
         chordProtocol.buildFingerTable();
 
         int targetKey = 450; // Key not matching any node exactly
-        NodeInterface expectedNode = network.getNode("Node 3"); // Expected Node with ID 500
+        NodeInterface expectedNode = network.getNode("Node 7"); // node7 has id 480
         LookUpResponse response = chordProtocol.lookUp(targetKey);
 
         Assert.assertEquals(expectedNode.getId(), response.node_index, "Finger table routing failed for key " + targetKey);
@@ -391,8 +391,8 @@ public class ChordProtocolTest {
         chordProtocol.buildOverlayNetwork();
         chordProtocol.buildFingerTable();
 
-        int targetKey = 800; // Key requiring wrap-around behavior
-        NodeInterface expectedNode = network.getNode("Node 1"); // Closest successor after wrap-around
+        int targetKey = 50; // key requiring wrap-around behavior
+        NodeInterface expectedNode = network.getNode("Node 4"); // id=105 (lowest after wraparound)
         LookUpResponse response = chordProtocol.lookUp(targetKey);
 
         Assert.assertEquals(expectedNode.getId(), response.node_index, "Wrap-around lookup failed for key " + targetKey);
@@ -465,14 +465,14 @@ public class ChordProtocolTest {
     public static void testRandomNodeLookup() {
         System.out.println("Running testRandomNodeLookup...");
 
-        Network network = Network.createNetwork("test", 4);
+        Network network = Network.createNetwork("test", 10);
         ChordProtocol chordProtocol = new ChordProtocol(ChordProtocolTest.m);
         chordProtocol.setNetwork(network);
         chordProtocol.buildOverlayNetwork();
         chordProtocol.buildFingerTable();
 
         int targetKey = 650;
-        NodeInterface expectedNode = network.getNode("Node 8"); // node 8: id 601... node 6: id 666
+        NodeInterface expectedNode = network.getNode("Node 6"); // node 8: id 601... node 6: id 666
         LookUpResponse response = chordProtocol.lookUp(targetKey);
 
         Assert.assertEquals(expectedNode.getId(), response.node_index, "Random node lookup failed for key " + targetKey);
@@ -495,10 +495,10 @@ public class ChordProtocolTest {
         NodeInterface node2 = network.getNode("Node 2"); // we also know node 2 has id 266
         node2.addData("Two fifty");
 
-        LookUpResponse response = chordProtocol.lookUp(350);
+        LookUpResponse response = chordProtocol.lookUp(300);
         Assert.assertEquals(node1.getId(), response.node_index, "data lookup failed for key 350");
 
-        response = chordProtocol.lookUp(269);
+        response = chordProtocol.lookUp(250);
         Assert.assertEquals(node2.getId(), response.node_index, "data lookup failed for key 269");
     }
 
