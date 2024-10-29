@@ -313,5 +313,29 @@ public class ChordProtocolSimulator {
 		 * TODO: implement this logic
 		 */
 		// Look up all the key, print out as required in the Assignment Description
+
+				// Perform lookups and collect results
+		int totalHops = 0;
+		int lookupCount = 0;
+
+		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
+			int keyIndex = entry.getValue();
+			System.err.println(entry.getKey() + " -> " + keyIndex);
+
+			// Perform lookup using the protocol
+			LookUpResponse response = protocol.lookUp(keyIndex);
+			System.err.println("Got response: " + response);
+
+			// Print the lookup response directly using LookUpResponse.toString()
+			System.out.println(response);
+
+			// Accumulate hop count for average calculation
+			totalHops += response.peers_looked_up.size();  // hop count is the size of peers_looked_up
+			lookupCount++;
+		}
+
+		// Calculate and print average hop count
+		double averageHopCount = (double) totalHops / lookupCount;
+		System.out.printf("average hop count = %.2f%n", averageHopCount);
 	}
 }
