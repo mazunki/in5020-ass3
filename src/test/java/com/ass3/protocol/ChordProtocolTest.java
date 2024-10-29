@@ -452,7 +452,6 @@ public class ChordProtocolTest {
 		
 		currentNode.getSuccessor().addData("hehe");
 
-		// NOTE: why does node 1 think it's responsible for 350?
 		System.out.println(currentNode.getName() + currentNode.getRoutingTable());
 		System.out.println(succeedingNode.getName() + succeedingNode.getRoutingTable());
 
