@@ -236,6 +236,7 @@ public class ChordProtocolSimulator {
 	 * with the correct node index (check response) is used for the comparison.
 	 */
 	public void testLookUp() {
+		int wrong = 0, ok = 0;
 		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
 			// lookup the key index
 			LookUpResponse response = protocol.lookUp(entry.getValue());
@@ -247,12 +248,18 @@ public class ChordProtocolSimulator {
 			System.out.println(response.toString());
 			// check whether the returned node index is correct or not
 			if (checkResponse(entry.getValue(), response.node_name)) {
-				System.out.println("lookup successful for " + entry.getKey());
+				ok++;
+				System.out.println("✅ lookup successful for " + entry.getKey());
 			} else {
-				System.out.println("lookup failed for " + entry.getKey());
+				wrong++;
+				System.out.println("❌ lookup failed for " + entry.getKey());
 				break;
 			}
 		}
+
+		System.out.println("summary:");
+		System.out.println("  ok = " + ok + "/" + keyIndexes.size());
+		System.out.println("  wrong = " + wrong + "/" + keyIndexes.size());
 
 	}
 
@@ -309,19 +316,16 @@ public class ChordProtocolSimulator {
 		// testLookUp();
 
 		int totalHops = 0;
-		int lookupCount = 0;
-
-		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
-			int keyIndex = entry.getValue();
-			LookUpResponse response = protocol.lookUp(keyIndex);
-			System.out.println("Looking for key: " + entry.getKey() + " => " + entry.getValue());
-			System.out.println(response + "\n");
-
-			totalHops += response.peers_looked_up.size();
-			lookupCount++;
-		}
-
-		double averageHopCount = (double) totalHops / lookupCount;
-		System.out.printf("average hop count = %.2f%n", averageHopCount);
+ 		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
+ 			int keyIndex = entry.getValue();
+ 			LookUpResponse response = protocol.lookUp(keyIndex);
+ 			System.out.println("Looking for key: " + entry.getKey() + " => " + entry.getValue());
+ 			System.out.println(response + "\n");
+ 
+ 			totalHops += response.peers_looked_up.size();
+ 		}
+ 
+ 		double averageHopCount = (double) totalHops / keyIndexes.size();
+ 		System.out.printf("average hop count = %.2f%n", averageHopCount);
 	}
 }
