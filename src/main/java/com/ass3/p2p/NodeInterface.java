@@ -70,10 +70,10 @@ public interface NodeInterface {
 
 	/**
 	 * It returns the successor of the node. The successor is the first neighbor
-	 * that's added to it. Neighbors are
-	 * ordered based on the order in which they have connected with this node.
+	 * that's added to it. Neighbors are ordered based on the order in which
+	 * they have connected with this node.
 	 *
-	 * @return nighbor node object
+	 * @return neighbor node object
 	 */
 	NodeInterface getSuccessor();
 

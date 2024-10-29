@@ -4,7 +4,7 @@ JAVA_FLAGS = -Xlint:unchecked
 
 TARGET_DIR = target
 SRC_DIR = src/main/java
-TEST_SRC_DIR = test
+TEST_SRC_DIR = src/test/java
 BUILD_DIR = $(TARGET_DIR)/classes
 TEST_BUILD_DIR = $(TARGET_DIR)/test-classes
 JAR_FILE = $(TARGET_DIR)/solution.jar
@@ -17,18 +17,18 @@ BIT_LENGTH ?= 10
 
 $(BUILD_DIR)/%.class: $(SRC_DIR)/%.java
 	@mkdir -p $(dir $@)
-	$(JAVAC) $(JAVA_FLAGS) -cp $(BUILD_DIR):$(SRC_DIR) $<
+	$(JAVAC) $(JAVA_FLAGS) -d $(BUILD_DIR) -cp $(BUILD_DIR):$(SRC_DIR) $<
 
 $(TEST_BUILD_DIR)/%.class: $(TEST_SRC_DIR)/%.java
 	@mkdir -p $(dir $@)
-	$(JAVAC) $(JAVA_FLAGS) -cp $(BUILD_DIR):$(SRC_DIR) -d $(TEST_BUILD_DIR) $<
+	$(JAVAC) $(JAVA_FLAGS) -d $(TEST_BUILD_DIR) -cp $(BUILD_DIR):$(SRC_DIR):$(TEST_SRC_DIR) $<
 
 build: $(patsubst $(SRC_DIR)/%.java,$(BUILD_DIR)/%.class,$(SOURCES))
 	
 test-build: $(patsubst $(TEST_SRC_DIR)/%.java,$(TEST_BUILD_DIR)/%.class,$(TESTS))
 
-test: test-build
-	@for test_class in $(shell find $(TEST_BUILD_DIR) -name "*.class" | sed 's|$(TEST_BUILD_DIR)/||;s|\.class||' | tr '/' '.'); do \
+tests: test-build
+	@for test_class in $(shell find $(TEST_BUILD_DIR) -name "*Test.class" | sed 's|$(TEST_BUILD_DIR)/||;s|\.class||' | tr '/' '.'); do \
 		echo "Running $$test_class..."; \
 		java -cp $(BUILD_DIR):$(TEST_BUILD_DIR) $$test_class || { echo "$$test_class failed"; exit 1; }; \
 	done
@@ -60,4 +60,4 @@ sim: $(JAR_TARGET)
 	make run case2 | tee $(LOG_DIR)/sim-100_20.log
 	make run case3 | tee $(LOG_DIR)/sim-1000_20.log
 
-all: clean build test jar
+all: clean build jar

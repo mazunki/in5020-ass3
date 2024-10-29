@@ -11,16 +11,6 @@
 	<properties>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
-		</properties>
-
-	<build>
-		<sourceDirectory>src/main/java</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
-		<resources>
-			<resource>
-				<directory>src/resources</directory>
-			</resource>
-		</resources>
-	</build>
+	</properties>
 </project>
 
