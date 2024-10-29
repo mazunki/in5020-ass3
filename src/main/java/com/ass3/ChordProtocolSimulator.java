@@ -260,7 +260,6 @@ public class ChordProtocolSimulator {
 		System.out.println("summary:");
 		System.out.println("  ok = " + ok + "/" + keyIndexes.size());
 		System.out.println("  wrong = " + wrong + "/" + keyIndexes.size());
-
 	}
 
 	/**
@@ -301,6 +300,38 @@ public class ChordProtocolSimulator {
 		protocol.buildFingerTable();
 	}
 
+	public void testLookUpAll(int start, int stop) {
+		int wrong = 0, ok = 0;
+		for (int i=start; i <= stop; i++) {
+			LookUpResponse response = protocol.lookUp(i);
+			if (response == null) {
+				wrong++;
+				System.out.println("❌ lookup failed for " + i);
+			} else {
+				ok++;
+				// System.out.println("✅ lookup successful for " + i);
+			}
+		}
+
+		System.out.println("summary:");
+		System.out.println("  ok = " + ok + "/" + (stop-start + 1));
+		System.out.println("  wrong = " + wrong + "/" + (stop-start + 1));
+	}
+
+	public float countAvgHops() {
+		int totalHops = 0;
+ 		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
+ 			int keyIndex = entry.getValue();
+ 			LookUpResponse response = protocol.lookUp(keyIndex);
+ 			// System.out.println("Looking for key: " + entry.getKey() + " => " + entry.getValue());
+ 			// System.out.println(response + "\n");
+ 
+ 			totalHops += response.peers_looked_up.size();
+ 		}
+
+		return totalHops / this.keyIndexes.entrySet().size();
+	}
+
 	/**
 	 * This is the starting point of this protocol.
 	 * This method starts the simulation.
@@ -313,19 +344,10 @@ public class ChordProtocolSimulator {
 		printRing();
 		printNetwork();
 
-		// testLookUp();
+		testLookUp();
+		// testLookUpAll(0, (1<<this.m) - 1);
 
-		int totalHops = 0;
- 		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
- 			int keyIndex = entry.getValue();
- 			LookUpResponse response = protocol.lookUp(keyIndex);
- 			System.out.println("Looking for key: " + entry.getKey() + " => " + entry.getValue());
- 			System.out.println(response + "\n");
- 
- 			totalHops += response.peers_looked_up.size();
- 		}
- 
- 		double averageHopCount = (double) totalHops / keyIndexes.size();
- 		System.out.printf("average hop count = %.2f%n", averageHopCount);
+		double avgHopCount = countAvgHops();
+ 		System.out.printf("average hop count = %.2f%n", avgHopCount);
 	}
 }
