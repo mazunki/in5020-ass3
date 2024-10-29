@@ -318,6 +318,9 @@ public class ChordProtocolSimulator {
 		System.out.println("  wrong = " + wrong + "/" + (stop-start + 1));
 	}
 
+	/**
+	 * This method calculates the average number of hops for all the keys indexes 
+	 */
 	public float countAvgHops() {
 		int totalHops = 0;
  		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
@@ -344,7 +347,7 @@ public class ChordProtocolSimulator {
 		printRing();
 		printNetwork();
 
-		testLookUp();
+		// testLookUp();
 		// testLookUpAll(0, (1<<this.m) - 1);
 
 		double avgHopCount = countAvgHops();
