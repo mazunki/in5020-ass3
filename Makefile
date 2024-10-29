@@ -46,19 +46,15 @@ run: jar
 
 rerun: clean all run
 
-case1:
-	make run NODE_COUNT=10 BIT_LENGTH=10
+case1: jar
+	make run NODE_COUNT=10 BIT_LENGTH=10 | tee $(LOG_DIR)/sim-10_10.log
 
-case2:
-	make run NODE_COUNT=100 BIT_LENGTH=20
+case2: jar
+	make run NODE_COUNT=100 BIT_LENGTH=20 | tee $(LOG_DIR)/sim-100_20.log
 
-case3:
-	make run NODE_COUNT=1000 BIT_LENGTH=20
+case3: jar
+	make run NODE_COUNT=1000 BIT_LENGTH=20 | tee $(LOG_DIR)/sim-1000_20.log
 
-sim: $(JAR_FILE)
-	mkdir -p $(LOG_DIR)
-	make run case1 | tee $(LOG_DIR)/sim-10_10.log
-	make run case2 | tee $(LOG_DIR)/sim-100_20.log
-	make run case3 | tee $(LOG_DIR)/sim-1000_20.log
+sim: case1 case2 case3
 
 all: clean build jar
