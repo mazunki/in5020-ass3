@@ -321,7 +321,7 @@ public class ChordProtocolSimulator {
 	/**
 	 * This method calculates the average number of hops for all the keys indexes 
 	 */
-	public float countAvgHops() {
+	public double countAvgHops() {
 		int totalHops = 0;
  		for (Map.Entry<String, Integer> entry : keyIndexes.entrySet()) {
  			int keyIndex = entry.getValue();
@@ -332,7 +332,7 @@ public class ChordProtocolSimulator {
  			totalHops += response.peers_looked_up.size();
  		}
 
-		return totalHops / this.keyIndexes.entrySet().size();
+		return (double) totalHops / (double) this.keyIndexes.entrySet().size();
 	}
 
 	/**
